@@ -1,0 +1,478 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* #backgroundImage {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+} */
+
+h1 {
+  font-size: 50px;
+  color: white;
+}
+
+h2 {
+  font-size: 35px;
+  color: white;
+}
+
+h3 {
+  font-size: 25px;
+  color: white;
+}
+
+p {
+  font-size: 20px;
+  color: white;
+}
+
+/* .moduleHeader {
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+} */
+
+.middleTitle {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  /* height: 10vh; */
+}
+
+.topLeftTitle {
+  display: flex;
+  justify-content: start;
+  width: 100vw;
+  padding-left: 2vh;
+  /* height: 15vh; */
+}
+
+.module {
+  height: 100vh;
+}
+
+.dashboardApp {
+  width: 100vw;
+  height: 100vh;
+}
+
+.loginInputs {
+  /* display: flex;
+  flex-direction: row;
+  gap: 10vw;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10vw;
+  width: 50vw;
+}
+
+input {
+  /* border: none; */
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 22px;
+  background: transparent;
+}
+
+input::placeholder {
+  color: white;
+}
+
+.loginModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  align-items: center;
+  /* display: grid;
+  grid-template-rows: 1fr 1.5fr 1.5fr 0.8fr;
+  justify-content: center; */
+}
+
+.confirmLogin {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  position: fixed;
+  bottom: 10vh;
+  width: 30vw;
+  align-items: center;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 25px;
+}
+
+.loginButton {
+  border-radius: 10%;
+  color: black;
+  background-color: yellow;
+  font-size: 20px;
+  width: 12vw;
+  height: 3vh;
+  text-align: center;
+  cursor: pointer;
+}
+
+.changeLoginContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  /* align-self: stretch; */
+  font-size: 25px;;
+}
+
+.changeLoginText {
+  color: yellow;
+  cursor: pointer;
+}
+
+.addProfilePicture {
+  height: 25vh;
+  width: 22vw;
+  display: flex;
+  /* cursor: pointer; */
+}
+
+.registerPicture {
+  width: 280px;
+  height: 280px;
+  /* position: relative; */
+}
+
+.addPicture {
+  /* visibility: hidden; */
+  opacity: 0;
+  width: 280px;
+  height: 280px;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.addPictureBackground {
+  /* width: 280px;
+  height: 280px; */
+  position: absolute;
+  opacity: 0.5;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7vh;
+}
+
+.goodDay {
+  width: 30vw;
+  height: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 45px;
+  color: white;
+}
+
+.modulePreviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 82vw;
+  gap: 10vh;
+}
+
+.dashboardRow {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  gap: 5vw;
+}
+
+.modulePreview {
+  width: 25vw;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid yellow;
+  align-items: center;
+}
+
+.modulePreviewTitle {
+  width: 25vw;
+  height: 7.5vh;
+  background-color: yellow;
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modulePreviewContent {
+  width: 25vw;
+  height: 22.5vh;
+  background-color: white;
+  color: black;
+  opacity: 0.75;
+  /* padding: 1vh; */
+}
+
+.profilePictureContainer {
+  position: absolute;
+  top: 1vh;
+  left: 1vh;
+  width: 10vh;
+  height: 10vh;
+}
+
+.profilePicture {
+  position: absolute;
+  top: 1vh;
+  left: 1vh;
+  width: 10vh;
+  height: 10vh;
+}
+
+.back {
+  position: absolute;
+  bottom: 2vh;
+  left: 2vh;
+  height: 7vh;
+  width: 15vw;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: white;
+}
+
+.columnPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  align-items: center;
+}
+
+.weatherRow {
+  display: flex;
+  flex-direction: row;
+  gap: 5vh;
+}
+
+.temperature {
+  color: black;
+}
+
+.location {
+  color: black;
+}
+
+.photosPreview {
+  width: 20vw;
+  height: 28vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5vh;
+}
+
+.photoPreview {
+  width: 11vh;
+  height: 11vh;
+}
+
+.previewPhotoBackground {
+  width: 11vh;
+  height: 11vh;
+}
+
+.previewPhoto {
+  width: 11vh;
+  height: 11vh;
+}
+
+.taskPreview {
+  display: flex;
+  flex-direction: row;
+  gap: 1vh;
+}
+
+.taskPreviewText {
+  font-size: 25px;
+  text-decoration: underline;
+}
+
+input[type="checkbox"] {
+  border: 1px solid yellow;
+  border-radius: 10%;
+}
+
+.clothesPreview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25vw;
+  height: 22.5vh;
+}
+
+.pieChartPreview {
+  width: 20vh;
+}
+
+.clothes {
+  width: 70vh;
+}
+
+.clothesModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  align-items: center;
+}
+
+.newsModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  align-items: center;
+}
+
+.newsTitlePreview {
+  color: black;
+}
+
+.photosModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  align-items: center;
+}
+
+.photos {
+  width: 77vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 3vh;
+}
+
+.photoContainer {
+  /* width: 22vw;
+  height: 30vh; */
+  width: 280px;
+  height: 280px;
+}
+
+.photoBackground {
+  width: 22vw;
+  height: 30vh;
+  opacity: 0.5;
+}
+
+.photo {
+  width: 280px;
+  height: 280px;
+}
+
+.addPhoto {
+  position: absolute;
+  width: 22vw;
+  height: 30vh;
+  opacity: 0;
+}
+
+.addPhotoContainer {
+  position: absolute;
+  width: 22vw;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus {
+  width: 22vh;
+  height: 22vh;
+}
+
+.task {
+  display: flex;
+  flex-direction: row;
+  gap: 5vh;
+}
+
+.tasksModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  align-items: center;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.smallPlus {
+  width: 7vh;
+  cursor: pointer;
+}
+
+.taskCheckbox {
+  width: 7vh;
+  height: 7vh;
+}
+
+.taskPreviewCheckbox {
+  width: 3vh;
+  height: 3vh;
+}
