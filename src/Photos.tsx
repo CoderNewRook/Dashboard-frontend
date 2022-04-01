@@ -6,14 +6,14 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
     // const [photos, setPhotos] = useState<File[]>([]);
 
     useEffect(() => {
-        props.setPhotos(props.photos);
+        // props.setPhotos(props.photos);
     }, [])
 
     const handlePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.item(0);
         if(file) props.setPhotos([...props.photos, file]);
         const formData = new FormData();
-        formData.append("picture", file ?? "");
+        formData.append("photo", file ?? "");
         fetch(`http://localhost:3000/photo/${props.username}`, {
             method: "POST",
             body: formData

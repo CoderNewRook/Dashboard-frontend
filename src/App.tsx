@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Pie } from 'react-chartjs-2';
-// import { Chart, ArcElement } from 'chart.js';
 import "chart.js/auto"
 import './App.css';
 import DashboardModule from './DashboardModule';
 import Login from './Login';
 import News from './News';
-// import Weather from './Weather';
 import Clothes from './Clothes';
 import Sport from './Sport';
 import Photos from './Photos';
@@ -44,15 +42,6 @@ interface IClothesData {
   [key:string]: number;
 }
 
-// interface IDashboardData {
-//   userData: IUserData;
-//   weather: IWeatherData;
-//   firstNews: INewsData;
-//   photos: File[];
-//   tasks: ITaskData[];
-//   clothes: IClothesData;
-// }
-
 const weatherIcons : {[key:string]:string} = {
   sunny: sunnyIcon,
   cloudy: cloudyIcon,
@@ -69,6 +58,7 @@ function App() {
   const [tasks, setTasks] = useState<ITaskData[]>([]);
   const [clothes, setClothes] = useState<IClothesData>({});
   const [moduleIndex, setModuleIndex] = useState<number | null>(null);
+  // const [saveTasksIntervalId, setSaveTasksIntervalId] = useState<number | null>(null);
 
   const fetchData = () => {
     fetch("http://localhost:3000/mytest")
@@ -77,33 +67,23 @@ function App() {
     .catch(error => console.log("there was an error " + error))
   }
 
-  // const readStream = async (stream: ReadableStream) => {
-  //   const reader = stream.getReader();
-  //   let charsReceived = 0;
-  
-  //   let result = "";
-
-  //   reader.read().then(function processText({ done, value }) {
-  //     // Result objects contain two properties:
-  //     // done  - true if the stream has already given you all its data.
-  //     // value - some data. Always undefined when done is true.
-  //     if (done) {
-  //       console.log("Stream complete");
-  //       return;
-  //     }
-  
-  //     const chunk = value;
-  
-  //     result += chunk;
-  
-  //     // Read some more, and call this function again
-  //     return reader.read().then(processText);
-  //   });
-  // }
-
   const backToHome = () => {
     setModuleIndex(null);
   }
+
+//   const saveTasks = () => {
+//     // const task = {task: "", completed: false};
+//     // setTasks([...tasks, task])
+//     fetch(`http://localhost:3000/tasks/${userData.username}`, {
+//         method: "PUT",
+//         headers: {"Content-Type": "application/json"},
+//         body: JSON.stringify({tasks : tasks})
+//     })
+//     .then(res => {
+//         console.log(res);
+//     })
+//     .catch(error => console.log("there was an error " + error))
+// }
 
   const login = async (username: string, password: string) => {
     let success = false;
@@ -113,13 +93,11 @@ function App() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ username, password })
     })
-    // await fetch(`http://localhost:3000/picture/${username}`)
     .then(async res => {
         if(res.ok) {
             success = true;
             setUserData(prevData => ({username, picture: null}));
             getDashboardData(username);
-            // setUserData({username : "", picture: pic as File});
           }
           else{
             success = false;
@@ -139,9 +117,6 @@ function App() {
     formData.append("picture", picture ?? "");
     await fetch("http://localhost:3000/register", {
         method: "POST",
-        // headers: {"Content-Type": "application/json"},
-        // headers: {"Content-Type": "multipart/form-data"},
-        // body: JSON.stringify({ username, email, password })
         body: formData
     })
     .then(res => {
@@ -158,9 +133,9 @@ function App() {
 
   const getDashboardData = (username: string) => {
     getUserData(username);
-    // getWeatherData();
+    getWeatherData();
     getNewsData();
-    // getSportData();
+    getSportData();
     getPhotos(username);
     getTasks(username);
     getClothesData();
@@ -175,16 +150,8 @@ function App() {
     fetch(`http://localhost:3000/picture/${username}`)
     .then(async res => {
         if(res.ok) {
-            // console.log(res);
-            // let pic: Blob = new Blob();
-            // if(res.body) {
-            // const pic = await res.blob();
-              // console.log(pic);
-            // }
             const picture = await responseToFile(res);
             setUserData(prevData => ({...prevData, picture}))
-            // const reader = res.body?.getReader();
-            // reader?.read();
           }
           else{
             console.log("User data response not ok");
@@ -245,12 +212,12 @@ function App() {
   }
 
   const getSportData = () => {
-    fetch(`http://localhost:3000/firstNews`)
+    fetch(`http://localhost:3000/sport`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
-            const news = await res.json();
-            setFirstNews(news);
+            const sport = await res.json();
+            setSport(sport);
           }
         else{
           console.log("Sport response not ok");
@@ -294,6 +261,8 @@ function App() {
             console.log(res);
             const tasks = await res.json();
             setTasks(tasks);
+            // if(saveTasksIntervalId) window.clearInterval(saveTasksIntervalId);
+            // setSaveTasksIntervalId(window.setInterval(saveTasks, 2500));
           }
         else{
           console.log("Tasks response not ok");

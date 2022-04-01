@@ -262,6 +262,10 @@ input::placeholder {
   /* padding: 1vh; */
 }
 
+.modulePreviewContent > div {
+  padding: 1vh;
+} 
+
 .profilePictureContainer {
   position: absolute;
   top: 1vh;

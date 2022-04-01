@@ -6,8 +6,12 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
     // const [tasks, setTasks] = useState<ITaskData[]>([]);
 
     useEffect(() => {
-        props.setTasks(props.tasks);
-        window.setInterval(saveTasks, 2500);
+        // props.setTasks(props.tasks);
+        // window.setInterval(saveTasks, 2500);
+        return () => {
+            console.log("Saving tasks");
+            saveTasks();
+        }
     }, [])
 
     const addTask = () => {
@@ -16,7 +20,7 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
         fetch(`http://localhost:3000/task/${props.username}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(task)
+            body: JSON.stringify({...task, id: props.tasks.length})
         })
         .then(res => {
             console.log(res);
@@ -35,7 +39,7 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
         fetch(`http://localhost:3000/tasks/${props.username}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({tasks : props.tasks})
+            body: JSON.stringify({tasks : props.tasks.map((task, i) => ({task: task.task, completed: task.completed, id: i}))})
         })
         .then(res => {
             console.log(res);
