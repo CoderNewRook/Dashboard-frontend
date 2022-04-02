@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ISportsData } from "./App";
 
-const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Dispatch<React.SetStateAction<string>>, back: () => void}) => {
+const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Dispatch<React.SetStateAction<string>>, back: JSX.Element}) => {
     const [currentTeam, setCurrentTeam] = useState(props.team);
 
     const titleCase = (str: string) => {
@@ -47,13 +47,14 @@ const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Di
                 <h1 className="topLeftTitle">Champion's League Challenge</h1>
                 <div className="sportContent">
                     <input type="text" className="inputTeam" onChange={handleTeamChange} placeholder="Input winning team" value={currentTeam}/>
-                    {props.team !== "" ? <div className="teamsBeatenDescription">These teams you won against</div> : ""}
+                    {props.teamsBeaten.hasOwnProperty(currentTeam) ? <div className="teamsBeatenDescription">These teams you won against:</div> : ""}
                     <div className="teamsBeaten">
                         {teamsBeatenDisplay()}
                     </div>
                 </div>
             </div>
-            <div className="back" onClick={props.back}>Back</div>
+            {/* <div className="back" onClick={props.back}>Back</div> */}
+            {props.back}
         </div>
     );
 };

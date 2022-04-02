@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {INewsData} from "./App";
 import newsImageBackground from "./Assets/Add_picture.png";
 
-const News = (props : {back: () => void}) => {
+const News = (props : {back: JSX.Element}) => {
     const [news, setNews] = useState<INewsData>({title: "Title", description: "Description"});
 
     useEffect(() => {
@@ -35,7 +35,8 @@ const News = (props : {back: () => void}) => {
             <h2>{news.title}</h2>
             <p>{news.description}</p>
         </div>
-        <div className="back" onClick={props.back}>Back</div>
+        {/* <div className="back" onClick={props.back}>Back</div> */}
+        {props.back}
     </div>
     );
 };

@@ -322,7 +322,7 @@ function App() {
     .catch(error => console.log("there was an error " + error))
   }
   
-  const weatherPreview = <div className="columnPreview">
+  const weatherPreview = <div className="columnPreview weatherPreview">
     <div className="weatherRow">
       <img src={weatherIcons[weather.weather]} alt="Weather icon" />
       <h3 className="temperature">{weather.temperature}</h3>
@@ -330,7 +330,7 @@ function App() {
     <h2 className="location">{weather.location}</h2>
   </div>;
 
-  const newsPreview = <div className="columnPreview">
+  const newsPreview = <div className="columnPreview newsPreview">
     <h3 className="newsTitlePreview">{firstNews.title}</h3>
     <div>{firstNews.description}</div>
   </div>;
@@ -340,16 +340,20 @@ function App() {
     {team === "" ? "" : <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>}
   </div>;
 
-  const photosPreview = <div className="photosPreview">
+  let objurl = "";
+
+  const photosPreview = <div className="photosPreviewContainer">
+    <div className="photosPreview">
     {Array(4).fill(0).map((dummyElement, i) => 
-    <div className="photoPreview" key={`photo${i}`}>
-      <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" />
-      {i < photos.length ? <img className="previewPhoto" src={URL.createObjectURL(photos[i])} alt="Uploaded photo" key={`photo${i}`}/> : ""}
+    <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
+      {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
+      {i < photos.length ? <img className="previewPhoto" src={objurl = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objurl)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
     </div>
     )}
+    </div>
   </div>;
 
-  const tasksPreview = <div className="columnPreview" >
+  const tasksPreview = <div className="columnPreview tasksPreview" >
     {tasks.slice(0, 3).map((task, i) => <div className="taskPreview" key={`task${i}`}><div className="taskPreviewText">{task.task}</div><input type="checkbox" className="taskPreviewCheckbox" checked={task.completed} disabled/></div>)}
   </div>;
   
@@ -364,13 +368,15 @@ function App() {
   };
   const clothesPreview = <div className="clothesPreview"><div className="pieChartPreview"><Pie data={{datasets: clothesData.datasets}}/></div></div>;
 
+  const back = <div className="back" onClick={backToHome}>Back</div>;
+
   const dashboardModulesData = [
     {title: "Weather", preview: weatherPreview, hasInnerNavigation: false, innerNavigation: <></>},
-    {title: "News", preview: newsPreview, hasInnerNavigation: true, innerNavigation: <News back={backToHome}/>},
-    {title: "Sport", preview: sportPreview, hasInnerNavigation: true, innerNavigation: <Sport teamsBeaten={teamsBeaten} team={team} setTeam={setTeam} back={backToHome}/>},
-    {title: "Photos", preview: photosPreview, hasInnerNavigation: true, innerNavigation: <Photos username={userData.username} photos={photos} setPhotos={setPhotos} back={backToHome}/>},
-    {title: "Tasks", preview: tasksPreview, hasInnerNavigation: true, innerNavigation: <Tasks username={userData.username} tasks={tasks} setTasks={setTasks} back={backToHome}/>},
-    {title: "Clothes", preview: clothesPreview, hasInnerNavigation: true, innerNavigation: <Clothes data={clothesData} back={backToHome}/>},
+    {title: "News", preview: newsPreview, hasInnerNavigation: true, innerNavigation: <News back={back}/>},
+    {title: "Sport", preview: sportPreview, hasInnerNavigation: true, innerNavigation: <Sport teamsBeaten={teamsBeaten} team={team} setTeam={setTeam} back={back}/>},
+    {title: "Photos", preview: photosPreview, hasInnerNavigation: true, innerNavigation: <Photos username={userData.username} photos={photos} setPhotos={setPhotos} back={back}/>},
+    {title: "Tasks", preview: tasksPreview, hasInnerNavigation: true, innerNavigation: <Tasks username={userData.username} tasks={tasks} setTasks={setTasks} back={back}/>},
+    {title: "Clothes", preview: clothesPreview, hasInnerNavigation: true, innerNavigation: <Clothes data={clothesData} back={back}/>},
   ]
 
   const modulesPerRow = 3;

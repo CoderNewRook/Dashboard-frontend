@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,7 +35,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 
 /* #backgroundImage {
@@ -210,6 +210,7 @@ input::placeholder {
   flex-direction: column;
   align-items: center;
   gap: 7vh;
+  padding-top: 3vh;
 }
 
 .goodDay {
@@ -219,7 +220,7 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 45px;
+  font-size: 60px;
   color: white;
 }
 
@@ -245,6 +246,7 @@ input::placeholder {
   flex-direction: column;
   border: 2px solid yellow;
   align-items: center;
+  border-radius: 5%;
 }
 
 .modulePreviewTitle {
@@ -257,6 +259,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5% 5% 0 0;
 }
 
 .modulePreviewContent {
@@ -265,6 +268,7 @@ input::placeholder {
   background-color: white;
   color: black;
   opacity: 0.75;
+  border-radius: 0 0 5% 5%;
   /* padding: 1vh; */
 }
 
@@ -278,6 +282,7 @@ input::placeholder {
   left: 1vh;
   width: 10vh;
   height: 10vh;
+  background-size: cover;
 }
 
 .profilePicture {
@@ -315,38 +320,54 @@ input::placeholder {
 .weatherRow {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 5vh;
+}
+
+.weatherPreview {
+  padding-top: 1vh;
 }
 
 .temperature {
   color: black;
+  font-size: 45px;
 }
 
 .location {
   color: black;
 }
 
+.photosPreviewContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .photosPreview {
-  width: 25vw;
-  height: 22.5vh;
+  width: 21.5vh;
+  height: 21.5vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 0.5vh;
+  margin-top: 0.5vh;
+  margin-bottom: 0.5vh;
 }
 
 .photoPreview {
-  width: 11vh;
-  height: 11vh;
+  width: 10.5vh;
+  height: 10.5vh;
+  background-size: cover;
+  border-radius: 5%;
 }
 
 .previewPhotoBackground {
-  width: 11vh;
-  height: 11vh;
+  width: 10.5vh;
+  height: 10.5vh;
+  border-radius: 5%;
 }
 
 .previewPhoto {
-  width: 11vh;
-  height: 11vh;
+  width: 10.5vh;
+  height: 10.5vh;
 }
 
 .taskPreview {
@@ -355,9 +376,14 @@ input::placeholder {
   gap: 1vh;
 }
 
+.tasksPreview {
+  padding-top: 1vh;
+}
+
 .taskPreviewText {
   font-size: 25px;
   text-decoration: underline;
+  max-width: 18vw;
 }
 
 input[type="checkbox"] {
@@ -400,6 +426,11 @@ input[type="checkbox"] {
   color: black;
 }
 
+.newsPreview {
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
 .newsImage {
   width: 45vw;
   height: 38vh;
@@ -424,6 +455,7 @@ input[type="checkbox"] {
   height: 30vh; */
   width: 280px;
   height: 280px;
+  background-size: cover;
 }
 
 .photoBackground {
@@ -509,8 +541,9 @@ input[type="checkbox"] {
 
 .inputTeam {
   align-self: center;
+  text-align: center;
   color: white;
-  font-size: 40px;
+  font-size: 45px;
   border: none;
 }
 
@@ -522,14 +555,17 @@ input[type="checkbox"] {
 
 .beatenTeam {
   color: white;
+  font-size: 22px;
 }
 
 .sportTeamName {
   color: black;
+  font-size: 45px;
 }
 
 .sportTeamsBeaten {
   color: black;
+  font-size: 30px;
 }
 
 .teamsBeatenDescription {

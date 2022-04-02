@@ -14,7 +14,7 @@ interface IClothesPieChartData {
 }
 
 
-const Clothes = (props: {data: IClothesPieChartData, back: () => void}) => {
+const Clothes = (props: {data: IClothesPieChartData, back: JSX.Element}) => {
     
     return (
     <div className="module">
@@ -22,7 +22,8 @@ const Clothes = (props: {data: IClothesPieChartData, back: () => void}) => {
             <h1 className="middleTitle">Favourite Warmer</h1>
             <div className="clothes"><Pie data={props.data}/></div>;
         </div>
-        <div className="back" onClick={props.back}>Back</div>
+        {/* <div className="back" onClick={props.back}>Back</div> */}
+        {props.back}
     </div>
     );
 };

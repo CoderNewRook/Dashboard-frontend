@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import photoBackground from "./Assets/Add_picture.png";
 import plus from "./Assets/Plus_button.png";
 
-const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispatch<React.SetStateAction<File[]>>, back: () => void}) => {
+const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispatch<React.SetStateAction<File[]>>, back: JSX.Element}) => {
     // const [photos, setPhotos] = useState<File[]>([]);
 
     useEffect(() => {
@@ -40,7 +40,8 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
             <h1 className="middleTitle">Photos</h1>
             <div className="photos">{photosDisplay}</div>
         </div>
-        <div className="back" onClick={props.back}>Back</div>
+        {/* <div className="back" onClick={props.back}>Back</div> */}
+        {props.back}
     </div>
     );
 };

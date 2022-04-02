@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ITaskData } from "./App";
 import plus from "./Assets/Plus_button_small.png";
 
-const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dispatch<React.SetStateAction<ITaskData[]>>, back: () => void}) => {
+const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dispatch<React.SetStateAction<ITaskData[]>>, back: JSX.Element}) => {
     // const [tasks, setTasks] = useState<ITaskData[]>([]);
 
     useEffect(() => {
@@ -71,7 +71,8 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
                 <img className="smallPlus" onClick={addTask} src={plus} alt="Add task" />
             </div>
         </div>
-        <div className="back" onClick={props.back}>Back</div>
+        {/* <div className="back" onClick={props.back}>Back</div> */}
+        {props.back}
     </div>
     );
 };
