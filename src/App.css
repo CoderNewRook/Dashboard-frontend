@@ -85,6 +85,11 @@ p {
   /* height: 15vh; */
 }
 
+.newsTitle {
+  left: 2vh;
+  top: 2vh;
+}
+
 .module {
   height: 100vh;
 }
@@ -262,9 +267,9 @@ input::placeholder {
   /* padding: 1vh; */
 }
 
-.modulePreviewContent > div {
+/* .modulePreviewContent > div {
   padding: 1vh;
-} 
+}  */
 
 .profilePictureContainer {
   position: absolute;
@@ -321,8 +326,8 @@ input::placeholder {
 }
 
 .photosPreview {
-  width: 20vw;
-  height: 28vh;
+  width: 25vw;
+  height: 22.5vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5vh;
@@ -386,12 +391,17 @@ input[type="checkbox"] {
 .newsModule {
   display: flex;
   flex-direction: column;
-  gap: 10vh;
+  gap: 5vh;
   align-items: center;
 }
 
 .newsTitlePreview {
   color: black;
+}
+
+.newsImage {
+  width: 45vw;
+  height: 38vh;
 }
 
 .photosModule {
@@ -464,6 +474,7 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   gap: 2vh;
+  width: 80vw;
 }
 
 .smallPlus {
@@ -497,10 +508,30 @@ input[type="checkbox"] {
 
 .inputTeam {
   align-self: center;
+  color: white;
+  font-size: 40px;
+  border: none;
 }
 
 .teamsBeaten {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
+  gap: 0.5vh;
+}
+
+.beatenTeam {
+  color: white;
+}
+
+.sportTeamName {
+  color: black;
+}
+
+.sportTeamsBeaten {
+  color: black;
+}
+
+.teamsBeatenDescription {
+  font-size: 30px;
+  color: white;
 }

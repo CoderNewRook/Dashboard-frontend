@@ -55,7 +55,7 @@ const weatherIcons : {[key:string]:string} = {
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState<IUserData>({username: "Swapnil", picture: null});
-  const [weather, setWeather] = useState<IWeatherData>({weather: "cloudy", temperature: "12", location: "London"});
+  const [weather, setWeather] = useState<IWeatherData>({weather: "cloudy", temperature: "4", location: "London"});
   const [firstNews, setFirstNews] = useState<INewsData>({title: "News title", description: "News description"});
   const [teamsBeaten, setTeamsBeaten] = useState<ISportsData>({});
   const [team, setTeam] = useState("");
@@ -187,7 +187,7 @@ function App() {
     .catch(error => console.log("there was an error " + error))
   }
 
-  const getWeatherData = () => {
+  const getWeatherData = async () => {
     const weatherToBasicWeather = (weather: any) => {
       switch(weather){
           case "Clear":
@@ -204,22 +204,23 @@ function App() {
       }
     }
   
-    const getWeather = async () => {
-        let coords = {lat: 35, lon: 139};
-        navigator.geolocation.getCurrentPosition(async pos => {
-            coords.lat = pos.coords.latitude;
-            coords.lon = pos.coords.longitude;
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
-            const data = await response.json();
-            console.log(data);
-            const temperature = data.main.temp;
-            const location = data.name;
-            const weather = weatherToBasicWeather(data.weather.main);
-            console.log({weather, temperature, location});
-            setWeather({weather, temperature, location});
-        },
-        err => console.log(err),
-        { enableHighAccuracy: false, timeout: 5000, maximumAge: 0 });
+    // const getWeather = async () => {
+    let coords = {lat: 35, lon: 139};
+    navigator.geolocation.getCurrentPosition(async pos => {
+        console.log(pos);
+        coords.lat = pos.coords.latitude;
+        coords.lon = pos.coords.longitude;
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
+        const data = await response.json();
+        console.log(data);
+        const temperature = Math.round(Number.parseFloat(data.main.temp)).toString();
+        const location = data.name;
+        const weather = weatherToBasicWeather(data.weather.main);
+        console.log({weather, temperature, location});
+        setWeather({weather, temperature, location});
+    },
+    err => console.log(err),
+    { enableHighAccuracy: false, timeout: 5000, maximumAge: 0 });
         // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
         // const data = await response.json();
         // console.log(data);
@@ -228,7 +229,7 @@ function App() {
         // const weather = weatherToBasicWeather(data.weather.main);
         // console.log({weather, temperature, location});
         // setWeather({weather, temperature, location});
-    }
+    // }
   }
 
   const getNewsData = () => {
@@ -335,8 +336,8 @@ function App() {
   </div>;
 
   const sportPreview = <div className="columnPreview">
-    <h3 className="sportTeamName">{team}</h3>
-    <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>
+    <h3 className="sportTeamName">{team === "" ? "Choose team" : team}</h3>
+    {team === "" ? "" : <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>}
   </div>;
 
   const photosPreview = <div className="photosPreview">
@@ -366,7 +367,7 @@ function App() {
   const dashboardModulesData = [
     {title: "Weather", preview: weatherPreview, hasInnerNavigation: false, innerNavigation: <></>},
     {title: "News", preview: newsPreview, hasInnerNavigation: true, innerNavigation: <News back={backToHome}/>},
-    {title: "Sport", preview: sportPreview, hasInnerNavigation: false, innerNavigation: <></>},
+    {title: "Sport", preview: sportPreview, hasInnerNavigation: true, innerNavigation: <Sport teamsBeaten={teamsBeaten} team={team} setTeam={setTeam} back={backToHome}/>},
     {title: "Photos", preview: photosPreview, hasInnerNavigation: true, innerNavigation: <Photos username={userData.username} photos={photos} setPhotos={setPhotos} back={backToHome}/>},
     {title: "Tasks", preview: tasksPreview, hasInnerNavigation: true, innerNavigation: <Tasks username={userData.username} tasks={tasks} setTasks={setTasks} back={backToHome}/>},
     {title: "Clothes", preview: clothesPreview, hasInnerNavigation: true, innerNavigation: <Clothes data={clothesData} back={backToHome}/>},
@@ -375,7 +376,7 @@ function App() {
   const modulesPerRow = 3;
   const dashboard = 
   <div>
-    <div className="profilePictureContainer"><img src={previewProfile} className="profilePicture" alt="" /><img className="profilePicture" src={userData.picture ? URL.createObjectURL(userData.picture) : ""} alt="Profile picture" /></div>
+    <div className="profilePictureContainer"><img src={previewProfile} className="profilePicture" alt="" /><img className="profilePicture" src={userData.picture ? URL.createObjectURL(userData.picture) : ""} alt="" /></div>
     
     <div className="dashboard">
       <div className="goodDay">{`Good day ${userData.username}`}</div>

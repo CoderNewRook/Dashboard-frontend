@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {INewsData} from "./App";
+import newsImageBackground from "./Assets/Add_picture.png";
 
 const News = (props : {back: () => void}) => {
     const [news, setNews] = useState<INewsData>({title: "Title", description: "Description"});
@@ -28,8 +29,9 @@ const News = (props : {back: () => void}) => {
 
     return (
     <div className="module">
+        <h1 className="newsTitle">News</h1>
         <div className="newsModule"> 
-            <h1 className="topLeftTitle">News</h1>
+            <img className="newsImage" src={newsImageBackground} alt="" />
             <h2>{news.title}</h2>
             <p>{news.description}</p>
         </div>
