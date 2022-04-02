@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import "chart.js/auto"
 import './App.css';
@@ -28,6 +28,10 @@ interface IWeatherData {
   location: string
 }
 
+export interface ISportsData {
+  [key: string]: string[];
+}
+
 export interface ITaskData {
   task: string;
   completed: boolean;
@@ -53,7 +57,8 @@ function App() {
   const [userData, setUserData] = useState<IUserData>({username: "Swapnil", picture: null});
   const [weather, setWeather] = useState<IWeatherData>({weather: "cloudy", temperature: "12", location: "London"});
   const [firstNews, setFirstNews] = useState<INewsData>({title: "News title", description: "News description"});
-  const [sport, setSport] = useState();
+  const [teamsBeaten, setTeamsBeaten] = useState<ISportsData>({});
+  const [team, setTeam] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
   const [tasks, setTasks] = useState<ITaskData[]>([]);
   const [clothes, setClothes] = useState<IClothesData>({});
@@ -84,6 +89,28 @@ function App() {
 //     })
 //     .catch(error => console.log("there was an error " + error))
 // }
+
+
+  useEffect(() => {
+    return () => {
+        console.log("Saving last input team");
+        saveTeam();
+    }
+  }, [])
+
+  const saveTeam = () => {
+    // const task = {task: "", completed: false};
+    // setTasks([...tasks, task])
+    fetch(`http://localhost:3000/sport/team/${userData.username}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({team})
+    })
+    .then(res => {
+        console.log(res);
+    })
+    .catch(error => console.log("there was an error " + error))
+  }
 
   const login = async (username: string, password: string) => {
     let success = false;
@@ -179,20 +206,28 @@ function App() {
   
     const getWeather = async () => {
         let coords = {lat: 35, lon: 139};
-        navigator.geolocation.getCurrentPosition(pos => {
+        navigator.geolocation.getCurrentPosition(async pos => {
             coords.lat = pos.coords.latitude;
             coords.lon = pos.coords.longitude;
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
+            const data = await response.json();
+            console.log(data);
+            const temperature = data.main.temp;
+            const location = data.name;
+            const weather = weatherToBasicWeather(data.weather.main);
+            console.log({weather, temperature, location});
+            setWeather({weather, temperature, location});
         },
         err => console.log(err),
         { enableHighAccuracy: false, timeout: 5000, maximumAge: 0 });
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
-        const data = await response.json();
-        console.log(data);
-        const temperature = data.main.temp;
-        const location = data.name;
-        const weather = weatherToBasicWeather(data.weather.main);
-        console.log({weather, temperature, location});
-        setWeather({weather, temperature, location});
+        // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=d0a10211ea3d36b0a6423a104782130e&units=metric`);
+        // const data = await response.json();
+        // console.log(data);
+        // const temperature = data.main.temp;
+        // const location = data.name;
+        // const weather = weatherToBasicWeather(data.weather.main);
+        // console.log({weather, temperature, location});
+        // setWeather({weather, temperature, location});
     }
   }
 
@@ -216,8 +251,8 @@ function App() {
     .then(async res => {
         if(res.ok) {
             console.log(res);
-            const sport = await res.json();
-            setSport(sport);
+            const data = await res.json();
+            setTeamsBeaten(data);
           }
         else{
           console.log("Sport response not ok");
@@ -300,8 +335,8 @@ function App() {
   </div>;
 
   const sportPreview = <div className="columnPreview">
-    <h3 className="newsTitlePreview">Sport headline</h3>
-    <div>Sport description</div>
+    <h3 className="sportTeamName">{team}</h3>
+    <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>
   </div>;
 
   const photosPreview = <div className="photosPreview">

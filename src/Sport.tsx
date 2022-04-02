@@ -1,21 +1,33 @@
-const Sport = () => {
-    const login = 
-    <div>
-        <div id="loginInputs">
-            <input type="text" />
-            <input type="password" />
-        </div>
-        <div>
-            <div>Login</div>
-            <div>New to the challenge? <div id="signup">Sign up</div></div>
-        </div>
-    </div>;
+import { useState } from "react";
+import { ISportsData } from "./App";
+
+const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Dispatch<React.SetStateAction<string>>, back: () => void}) => {
+    const [currentTeam, setCurrentTeam] = useState(props.team);
+
+    const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const nextCurrentTeam = e.target.value;
+        setCurrentTeam(nextCurrentTeam);
+        if(props.teamsBeaten.hasOwnProperty(nextCurrentTeam)) {
+            props.setTeam(nextCurrentTeam);
+        }
+    }
+
+    const teamsBeatenDisplay = props.teamsBeaten[props.team].map(team => <div>{team}</div>);
 
     return (
-    <div>
-        <h1 id="loginHeader">Dev Challenge</h1>
-
-    </div>
+        <div className="module">
+            <div className="sportModule">
+                <h1 className="topLeftTitle">Champion's League Challenge</h1>
+                <div className="sportContent">
+                    <input type="text" className="inputTeam" placeholder="These teams you won against" value={currentTeam}/>
+                    {props.team !== "" ? <div>These teams you won against</div> : ""}
+                    <div className="teamsBeaten">
+                        {teamsBeatenDisplay}
+                    </div>
+                </div>
+            </div>
+            <div className="back" onClick={props.back}>Back</div>
+        </div>
     );
 };
 

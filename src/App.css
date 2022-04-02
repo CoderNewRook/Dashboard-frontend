@@ -480,3 +480,27 @@ input[type="checkbox"] {
   width: 3vh;
   height: 3vh;
 }
+
+.sportModule {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+}
+
+.sportContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  align-self: center;
+  width: 80vw;
+}
+
+.inputTeam {
+  align-self: center;
+}
+
+.teamsBeaten {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
