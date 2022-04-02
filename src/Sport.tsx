@@ -5,7 +5,8 @@ const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Di
     const [currentTeam, setCurrentTeam] = useState(props.team);
 
     const titleCase = (str: string) => {
-        return str[0].toUpperCase() + str.slice(1);
+        if(str === "") return "";
+        return str[0].toUpperCase() + str.slice(1).toLowerCase();
     }
 
     // const hasTeam = (key: string) => {

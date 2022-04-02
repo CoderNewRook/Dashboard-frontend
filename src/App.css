@@ -86,6 +86,7 @@ p {
 }
 
 .newsTitle {
+  position: absolute;
   left: 2vh;
   top: 2vh;
 }
