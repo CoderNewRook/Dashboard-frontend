@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import "chart.js/auto"
 import './App.css';
-import DashboardModule from './DashboardModule';
 import Login from './Login';
 import News from './News';
 import Clothes from './Clothes';
@@ -366,17 +365,18 @@ function App() {
     {team === "" ? "" : <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>}
   </div>;
 
-  let objURL = "";
+  // let objURL = "";
 
   const photosPreview = <div className="photosPreviewContainer">
     <div className="photosPreview">
-    {Array(4).fill(0).map((dummyElement, i) => 
+    {Array(4).fill(0).map((dummyElement, i) => {
+    let objURL = "";
     // <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
-    <div className="photoPreview" key={`photo${i}`}>
+    return <div className="photoPreview" key={`photo${i}`}>
       {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
       {i < photos.length ? <img className="previewPhoto" src={objURL = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
     </div>
-    )}
+    })}
     </div>
   </div>;
 
@@ -420,10 +420,12 @@ function App() {
     {title: "Clothes", preview: clothesPreview, hasInnerNavigation: true, innerNavigation: <Clothes data={clothesData} back={back}/>},
   ]
 
+  let objURL = "";
+
   const modulesPerRow = 3;
   const dashboard = 
   <div>
-    <div className="profilePictureContainer">{userData.picture ? <img className="profilePicture" src={URL.createObjectURL(userData.picture)} alt="" /> : <img src={previewProfile} className="profilePicture" alt="" />}</div>
+    <div className="profilePictureContainer">{userData.picture ? <img className="profilePicture" src={objURL = URL.createObjectURL(userData.picture)} onLoad={() => URL.revokeObjectURL(objURL)} alt="" /> : <img src={previewProfile} className="profilePicture" alt="" />}</div>
     
     <div className="dashboard">
       <div className="goodDay">{`Good day ${userData.username}`}</div>

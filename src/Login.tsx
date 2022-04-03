@@ -19,6 +19,7 @@ const Login = (props : ILoginProps) => {
     const [picture, setPicture] = useState<File | null>(null);
     const [pictureSrc, setPictureSrc] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [accountCreated, setAccountCreated] = useState(false);
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
@@ -63,6 +64,7 @@ const Login = (props : ILoginProps) => {
         }
         else{
             setErrorMessage("Account created!");
+            setAccountCreated(true);
         }
         setIsRegistering(false);
         // const realPicture = picture as MyFile;
@@ -101,9 +103,9 @@ const Login = (props : ILoginProps) => {
             <input type="password" placeholder="Password" onChange={handlePasswordChange} value={password} required/>
         </div>
         <div className="confirmLogin">
-            <div className="errorMessage">{errorMessage}</div>
+            <div className="errorMessage" style={accountCreated ? {color: "green"} : {}}>{errorMessage}</div>
             <div className="loginButton" onClick={login}>Login</div>
-            <div className="changeLoginContainer">New to the challenge? <div className="changeLoginText" onClick={() => setIsRegistering(true)}>Sign up</div></div>
+            <div className="changeLoginContainer">New to the challenge? <div className="changeLoginText" onClick={() => {setIsRegistering(true); setErrorMessage(""); setAccountCreated(false)}}>Sign up</div></div>
         </div>
     </div>
 
@@ -122,7 +124,7 @@ const Login = (props : ILoginProps) => {
     <div className="confirmLogin">
         <div className="errorMessage">{errorMessage}</div>
         <div className="loginButton" onClick={register}>Register</div>
-        <div className="changeLoginContainer">Already have an account? <div className="changeLoginText" onClick={() => setIsRegistering(false)}>Login</div></div>
+        <div className="changeLoginContainer">Already have an account? <div className="changeLoginText" onClick={() => {setIsRegistering(false); setErrorMessage("")}}>Login</div></div>
     </div>
     </div>
 

@@ -53,10 +53,11 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
         .catch(error => console.log("there was an error " + error))
     }
 
-    let objURL = "";
+    // let objURL = "";
 
     const photosDisplay = Array(6).fill(0).map((photo, i) => 
-    <div className="photoContainer" onMouseEnter={() => setHoveringIndex(i)} onMouseLeave={() => setHoveringIndex(-1)} style={i < props.photos.length ? {} : {backgroundImage: `url(${photoBackground})`, backgroundSize: "280px 280px"}} key={`photo${i}`}>
+    {let objURL = "";
+    return <div className="photoContainer" onMouseEnter={() => setHoveringIndex(i)} onMouseLeave={() => setHoveringIndex(-1)} style={i < props.photos.length ? {} : {backgroundImage: `url(${photoBackground})`, backgroundSize: "280px 280px"}} key={`photo${i}`}>
         {/* <img className="photoBackground" src={photoBackground} alt="" /> */}
         {i < props.photos.length ? <div className="addPhotoContainer"><input className="addPhoto" type="file" onChange={e => changePhoto(e, i)} accept="image/*"/>
         <img className="photo" src={URL.createObjectURL(props.photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Photo" />
@@ -65,7 +66,7 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
         : i === props.photos.length ? <div className="addPhotoContainer"><input className="addPhoto" type="file" onChange={addPhoto} accept="image/*"/><img className="plus" src={plus} alt="Add photo" /></div>
         : ""}
     </div>
-    )
+    })
 
     return (
     <div className="module">
