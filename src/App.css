@@ -348,8 +348,8 @@ input::placeholder {
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 0.5vh;
-  margin-top: 0.5vh;
-  margin-bottom: 0.5vh;
+  /* margin-top: 0.5vh;
+  margin-bottom: 0.5vh; */
 }
 
 .photoPreview {
@@ -450,12 +450,23 @@ input[type="checkbox"] {
   row-gap: 3vh;
 }
 
+/* .photoContainer {
+  width: 22vw;
+  height: 30vh;
+  width: 280px;
+  height: 280px;
+  background-size: cover;
+} */
+
 .photoContainer {
   /* width: 22vw;
   height: 30vh; */
   width: 280px;
   height: 280px;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .photoBackground {
@@ -471,23 +482,37 @@ input[type="checkbox"] {
 
 .addPhoto {
   position: absolute;
-  width: 22vw;
-  height: 30vh;
+  /* width: 22vw;
+  height: 30vh; */
+  width: 280px;
+  height: 280px;
   opacity: 0;
+}
+
+.deletePhoto {
+  background-color: indianred;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-size: cover;
 }
 
 .addPhotoContainer {
   position: absolute;
-  width: 22vw;
-  height: 30vh;
+  /* width: 22vw;
+  height: 30vh; */
+  width: 280px;
+  height: 280px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .plus {
-  width: 22vh;
-  height: 22vh;
+  /* width: 22vh;
+  height: 22vh; */
+  width: 250px;
+  height: 250px;
 }
 
 .task {
@@ -523,6 +548,10 @@ input[type="checkbox"] {
 .taskPreviewCheckbox {
   width: 3vh;
   height: 3vh;
+}
+
+.taskPreviewCheckbox {
+  opacity: 0;
 }
 
 .sportModule {

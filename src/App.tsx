@@ -268,8 +268,9 @@ function App() {
         if(res.ok) {
             console.log(res);
             const numOfPhotos = await res.json() as Promise<{numOfPhotos: number}>;
+            // Get each photo one by one
             for(let i = 0; i < (await numOfPhotos).numOfPhotos; i++){
-              fetch(`http://localhost:3000/photo/${username}/${i}`)
+              fetch(`http://localhost:3000/photo/${username}?id=${i}`)
               .then(async innerRes => {
                   if(innerRes.ok) {
                       const photo = await responseToFile(innerRes); 
@@ -325,31 +326,39 @@ function App() {
   const weatherPreview = <div className="columnPreview weatherPreview">
     <div className="weatherRow">
       <img src={weatherIcons[weather.weather]} alt="Weather icon" />
-      <h3 className="temperature">{weather.temperature}</h3>
+      <div className="temperature">{weather.temperature}</div>
     </div>
-    <h2 className="location">{weather.location}</h2>
+    <div className="location">{weather.location}</div>
   </div>;
 
   const newsPreview = <div className="columnPreview newsPreview">
-    <h3 className="newsTitlePreview">{firstNews.title}</h3>
+    <div className="newsTitlePreview">{firstNews.title}</div>
     <div>{firstNews.description}</div>
   </div>;
 
   const sportPreview = <div className="columnPreview">
-    <h3 className="sportTeamName">{team === "" ? "Choose team" : team}</h3>
+    <div className="sportTeamName">{team === "" ? "Choose team" : team}</div>
     {team === "" ? "" : <div className="sportTeamsBeaten">Teams beaten: {teamsBeaten[team].length}</div>}
   </div>;
 
-  let objurl = "";
+  let objURL = "";
+
+  // const photosPreview = <div className="photosPreviewContainer">
+  //   <div className="photosPreview">
+  //   {Array(4).fill(0).map((dummyElement, i) => 
+  //   <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
+  //     {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
+  //     {i < photos.length ? <img className="previewPhoto" src={objurl = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objurl)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
+  //   </div>
+  //   )}
+  //   </div>
+  // </div>;
 
   const photosPreview = <div className="photosPreviewContainer">
     <div className="photosPreview">
     {Array(4).fill(0).map((dummyElement, i) => 
-    <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
-      {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
-      {i < photos.length ? <img className="previewPhoto" src={objurl = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objurl)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
-    </div>
-    )}
+      i < photos.length ? <img className="previewPhoto" src={objURL = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Uploaded photo" key={`photo${i}`}/>
+      : <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}></div>)}
     </div>
   </div>;
 
