@@ -29,7 +29,7 @@ const News = (props : {back: JSX.Element}) => {
 
     return (
     <div className="module">
-        <h1 className="newsTitle">News</h1>
+        <h1 className="topLeftTitle">News</h1>
         <div className="newsModule"> 
             <img className="newsImage" src={newsImageBackground} alt="" />
             <h2>{news.title}</h2>

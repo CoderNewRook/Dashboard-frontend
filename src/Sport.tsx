@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { ISportsData } from "./App";
 
-const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Dispatch<React.SetStateAction<string>>, back: JSX.Element}) => {
+const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Dispatch<React.SetStateAction<string>>, back: JSX.Element, titleCase: (str: string) => string}) => {
     const [currentTeam, setCurrentTeam] = useState(props.team);
 
-    const titleCase = (str: string) => {
-        if(str === "") return "";
-        return str[0].toUpperCase() + str.slice(1).toLowerCase();
-    }
+    // const titleCase = (str: string) => {
+    //     if(str === "") return "";
+    //     return str[0].toUpperCase() + str.slice(1).toLowerCase();
+    // }
 
     // const hasTeam = (key: string) => {
     //     const titleCaseKey = titleCase(key);
@@ -22,7 +22,7 @@ const Sport = (props: {teamsBeaten: ISportsData, team: string, setTeam: React.Di
     // }
 
     const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const nextCurrentTeam = titleCase(e.target.value);
+        const nextCurrentTeam = props.titleCase(e.target.value);
         setCurrentTeam(nextCurrentTeam);
         if(props.teamsBeaten.hasOwnProperty(nextCurrentTeam)) {
         // if(hasTeam(nextCurrentTeam)) {

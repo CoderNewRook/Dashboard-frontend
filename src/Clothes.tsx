@@ -20,7 +20,7 @@ const Clothes = (props: {data: IClothesPieChartData, back: JSX.Element}) => {
     <div className="module">
         <div className="clothesModule">
             <h1 className="middleTitle">Favourite Warmer</h1>
-            <div className="clothes"><Pie data={props.data}/></div>;
+            <div className="clothes"><Pie data={props.data}/></div>
         </div>
         {/* <div className="back" onClick={props.back}>Back</div> */}
         {props.back}

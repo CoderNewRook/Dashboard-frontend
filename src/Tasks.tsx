@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ITaskData } from "./App";
 import plus from "./Assets/Plus_button_small.png";
+import tick from "./Assets/Checked.png";
 
 const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dispatch<React.SetStateAction<ITaskData[]>>, back: JSX.Element}) => {
     // const [tasks, setTasks] = useState<ITaskData[]>([]);
@@ -15,7 +16,7 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
     }, [])
 
     const addTask = () => {
-        const task = {task: "", completed: false};
+        const task = {task: `Task ${props.tasks.length}`, completed: false};
         props.setTasks([...props.tasks, task])
         fetch(`http://localhost:3000/task/${props.username}`, {
             method: "POST",
@@ -49,16 +50,19 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
 
     const tasksDisplay = props.tasks.map((task, i) => 
     <div className="task" key={`task${i}`}>
-        <input type="text" value={task.task} onChange={e => {
+        <input className="taskDescription" type="text" value={task.task} onChange={e => {
             const nextTasks = [...props.tasks];
             nextTasks[i].task = e.target.value;
             props.setTasks([...nextTasks]);
         }}/>
-        <input type="checkbox" className="taskCheckbox" checked={task.completed} onClick={() => {
-            const nextTasks = [...props.tasks];
-            nextTasks[i].completed = !task.completed;
-            props.setTasks([...nextTasks]);
-        }}/>
+        <div className="taskCheckbox">
+            {task.completed ? <img className="tick" src={tick} alt="Tick" /> : ""}
+            <input type="checkbox" className="checkbox" checked={task.completed} onClick={() => {
+                const nextTasks = [...props.tasks];
+                nextTasks[i].completed = !task.completed;
+                props.setTasks([...nextTasks]);
+            }}/>
+        </div>
     </div>
     )
 

@@ -13,9 +13,11 @@ import Tasks from './Tasks';
 import sunnyIcon from "./Assets/Sun_icon.png";
 import cloudyIcon from "./Assets/Clouds_icon.png";
 import rainyIcon from "./Assets/Rain_icon.png";
-import previewPhotoBackground from "./Assets/Photo_preview_background.png";
+// import previewPhotoBackground from "./Assets/Photo_preview_background.png";
 import previewProfile from "./Assets/Add_picture.png";
 import backgroundImage from "./Assets/Background.png";
+// import container from "./Assets/Background.png";
+import tick from "./Assets/Checked.png";
 
 export interface INewsData {
   title: string;
@@ -76,6 +78,11 @@ function App() {
     setModuleIndex(null);
   }
 
+  const titleCase = (str: string) => {
+    if(str === "") return "";
+    return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}
+
 //   const saveTasks = () => {
 //     // const task = {task: "", completed: false};
 //     // setTasks([...tasks, task])
@@ -92,15 +99,17 @@ function App() {
 
 
   useEffect(() => {
+    window.addEventListener("beforeunload", saveTeam)
     return () => {
-        console.log("Saving last input team");
-        saveTeam();
+      // console.log("Saving last input team");
+      window.removeEventListener("beforeunload", saveTeam)
     }
   }, [])
 
   const saveTeam = () => {
     // const task = {task: "", completed: false};
     // setTasks([...tasks, task])
+    console.log("Saving last input team");
     fetch(`http://localhost:3000/sport/team/${userData.username}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
@@ -163,6 +172,7 @@ function App() {
     getWeatherData();
     getNewsData();
     getSportData();
+    getTeam();
     getPhotos(username);
     getTasks(username);
     getClothesData();
@@ -262,6 +272,21 @@ function App() {
     .catch(error => console.log("there was an error " + error))
   }
 
+  const getTeam = () => {
+    fetch(`http://localhost:3000/sport/team/${userData.username}`)
+    .then(async res => {
+        if(res.ok) {
+            console.log(res);
+            const data = await res.json();
+            setTeam(data.team);
+          }
+        else{
+          console.log("Team response not ok");
+        }
+    })
+    .catch(error => console.log("there was an error " + error))
+  }
+  
   const getPhotos = (username: string) => {
     fetch(`http://localhost:3000/photos/${username}`)
     .then(async res => {
@@ -343,32 +368,39 @@ function App() {
 
   let objURL = "";
 
-  // const photosPreview = <div className="photosPreviewContainer">
-  //   <div className="photosPreview">
-  //   {Array(4).fill(0).map((dummyElement, i) => 
-  //   <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
-  //     {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
-  //     {i < photos.length ? <img className="previewPhoto" src={objurl = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objurl)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
-  //   </div>
-  //   )}
-  //   </div>
-  // </div>;
-
   const photosPreview = <div className="photosPreviewContainer">
     <div className="photosPreview">
     {Array(4).fill(0).map((dummyElement, i) => 
-      i < photos.length ? <img className="previewPhoto" src={objURL = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Uploaded photo" key={`photo${i}`}/>
-      : <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}></div>)}
+    // <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}>
+    <div className="photoPreview" key={`photo${i}`}>
+      {/* <img className="previewPhotoBackground" src={previewPhotoBackground} alt="" /> */}
+      {i < photos.length ? <img className="previewPhoto" src={objURL = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Uploaded photo" key={`photo${i}`}/> : ""}
+    </div>
+    )}
     </div>
   </div>;
 
+  // const photosPreview = <div className="photosPreviewContainer">
+  //   <div className="photosPreview">
+  //   {Array(4).fill(0).map((dummyElement, i) => 
+  //     i < photos.length ? <img className="previewPhoto" src={objURL = URL.createObjectURL(photos[i])} onLoad={() => URL.revokeObjectURL(objURL)} alt="Uploaded photo" key={`photo${i}`}/>
+  //     : <div className="photoPreview" style={{backgroundImage: `url(${previewProfile})`}} key={`photo${i}`}></div>)}
+  //   </div>
+  // </div>;
+
   const tasksPreview = <div className="columnPreview tasksPreview" >
-    {tasks.slice(0, 3).map((task, i) => <div className="taskPreview" key={`task${i}`}><div className="taskPreviewText">{task.task}</div><input type="checkbox" className="taskPreviewCheckbox" checked={task.completed} disabled/></div>)}
+    {tasks.slice(0, 3).map((task, i) => <div className="taskPreview" key={`task${i}`}>
+        <div className="taskPreviewText">{task.task}</div>
+        <div className="taskPreviewCheckbox">
+          {task.completed ? <img className="previewTick" src={tick} alt="Tick" /> : ""}
+          <input type="checkbox" className="previewCheckbox" checked={task.completed} disabled/>
+        </div>
+    </div>)}
   </div>;
   
   const clothesColors = ["red", "blue", "yellow", "green", "purple", "orange", "turquoise", "cyan"];
   const clothesData = {
-    labels: Object.keys(clothes),
+    labels: Object.keys(clothes).map(clothe => titleCase(clothe)),
     datasets: [{
       label: "Favourite Warmer",
       data: Object.values(clothes),
@@ -377,12 +409,12 @@ function App() {
   };
   const clothesPreview = <div className="clothesPreview"><div className="pieChartPreview"><Pie data={{datasets: clothesData.datasets}}/></div></div>;
 
-  const back = <div className="back" onClick={backToHome}>Back</div>;
+  const back = <button className="back" onClick={backToHome}>Back</button>;
 
   const dashboardModulesData = [
     {title: "Weather", preview: weatherPreview, hasInnerNavigation: false, innerNavigation: <></>},
     {title: "News", preview: newsPreview, hasInnerNavigation: true, innerNavigation: <News back={back}/>},
-    {title: "Sport", preview: sportPreview, hasInnerNavigation: true, innerNavigation: <Sport teamsBeaten={teamsBeaten} team={team} setTeam={setTeam} back={back}/>},
+    {title: "Sport", preview: sportPreview, hasInnerNavigation: true, innerNavigation: <Sport teamsBeaten={teamsBeaten} team={team} setTeam={setTeam} back={back} titleCase={titleCase}/>},
     {title: "Photos", preview: photosPreview, hasInnerNavigation: true, innerNavigation: <Photos username={userData.username} photos={photos} setPhotos={setPhotos} back={back}/>},
     {title: "Tasks", preview: tasksPreview, hasInnerNavigation: true, innerNavigation: <Tasks username={userData.username} tasks={tasks} setTasks={setTasks} back={back}/>},
     {title: "Clothes", preview: clothesPreview, hasInnerNavigation: true, innerNavigation: <Clothes data={clothesData} back={back}/>},
@@ -391,7 +423,7 @@ function App() {
   const modulesPerRow = 3;
   const dashboard = 
   <div>
-    <div className="profilePictureContainer"><img src={previewProfile} className="profilePicture" alt="" /><img className="profilePicture" src={userData.picture ? URL.createObjectURL(userData.picture) : ""} alt="" /></div>
+    <div className="profilePictureContainer">{userData.picture ? <img className="profilePicture" src={URL.createObjectURL(userData.picture)} alt="" /> : <img src={previewProfile} className="profilePicture" alt="" />}</div>
     
     <div className="dashboard">
       <div className="goodDay">{`Good day ${userData.username}`}</div>
