@@ -13,7 +13,7 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
         props.setPhotos([...props.photos, file]);
         const formData = new FormData();
         formData.append("photo", file ?? "");
-        fetch(`https://dashboard-challenge-project.herokuapp.com/photo/${props.username}`, {
+        fetch(`http://localhost:3000/photo/${props.username}`, {
             method: "POST",
             body: formData
         })
@@ -31,7 +31,7 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
         props.setPhotos([...nextPhotos]);
         const formData = new FormData();
         formData.append("photo", file ?? "");
-        fetch(`https://dashboard-challenge-project.herokuapp.com/photo/${props.username}?id=${index}`, {
+        fetch(`http://localhost:3000/photo/${props.username}?id=${index}`, {
             method: "PUT",
             body: formData
         })
@@ -44,7 +44,7 @@ const Photos = (props: {username: string, photos: File[], setPhotos: React.Dispa
     const deletePhoto = (index: number) => {
         props.setPhotos([...props.photos.slice(0, index), ...props.photos.slice(index + 1)]);
         // props.setPhotos([...props.photos].splice(index, 1));
-        fetch(`https://dashboard-challenge-project.herokuapp.com/photo/${props.username}?id=${index}`, {
+        fetch(`http://localhost:3000/photo/${props.username}?id=${index}`, {
             method: "DELETE"
         })
         .then(res => {

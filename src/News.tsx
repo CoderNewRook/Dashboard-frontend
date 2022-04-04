@@ -10,7 +10,7 @@ const News = (props : {back: JSX.Element}) => {
     }, [])
 
     const getLatestNews = () => {
-        fetch("https://dashboard-challenge-project.herokuapp.com/latestNews")
+        fetch("http://localhost:3000/latestNews")
         .then(res => {
             if(res.ok){
                 return res.json() as Promise<INewsData>;

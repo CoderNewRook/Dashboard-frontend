@@ -67,7 +67,7 @@ function App() {
   // const [saveTasksIntervalId, setSaveTasksIntervalId] = useState<number | null>(null);
 
   const fetchData = () => {
-    fetch("https://dashboard-challenge-project.herokuapp.com/mytest")
+    fetch("http://localhost:3000/mytest")
     .then(res => res.ok ? res.json() : "not ok")
     .then(data => console.log(data))
     .catch(error => console.log("there was an error " + error))
@@ -85,7 +85,7 @@ function App() {
 //   const saveTasks = () => {
 //     // const task = {task: "", completed: false};
 //     // setTasks([...tasks, task])
-//     fetch(`https://dashboard-challenge-project.herokuapp.com/tasks/${userData.username}`, {
+//     fetch(`http://localhost:3000/tasks/${userData.username}`, {
 //         method: "PUT",
 //         headers: {"Content-Type": "application/json"},
 //         body: JSON.stringify({tasks : tasks})
@@ -109,7 +109,7 @@ function App() {
     // const task = {task: "", completed: false};
     // setTasks([...tasks, task])
     console.log("Saving last input team");
-    fetch(`https://dashboard-challenge-project.herokuapp.com/sport/team/${userData.username}`, {
+    fetch(`http://localhost:3000/sport/team/${userData.username}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({team})
@@ -123,7 +123,7 @@ function App() {
   const login = async (username: string, password: string) => {
     let success = false;
     console.log(username, password);
-    await fetch("https://dashboard-challenge-project.herokuapp.com/login", {
+    await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ username, password })
@@ -150,7 +150,7 @@ function App() {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("picture", picture ?? "");
-    await fetch("https://dashboard-challenge-project.herokuapp.com/register", {
+    await fetch("http://localhost:3000/register", {
         method: "POST",
         body: formData
     })
@@ -183,7 +183,7 @@ function App() {
   }
 
   const getUserData = (username: string) => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/picture/${username}`)
+    fetch(`http://localhost:3000/picture/${username}`)
     .then(async res => {
         if(res.ok) {
             const picture = await responseToFile(res);
@@ -242,7 +242,7 @@ function App() {
   }
 
   const getNewsData = () => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/firstNews`)
+    fetch(`http://localhost:3000/firstNews`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
@@ -257,7 +257,7 @@ function App() {
   }
 
   const getSportData = () => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/sport`)
+    fetch(`http://localhost:3000/sport`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
@@ -272,7 +272,7 @@ function App() {
   }
 
   const getTeam = () => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/sport/team/${userData.username}`)
+    fetch(`http://localhost:3000/sport/team/${userData.username}`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
@@ -287,14 +287,14 @@ function App() {
   }
   
   const getPhotos = (username: string) => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/photos/${username}`)
+    fetch(`http://localhost:3000/photos/${username}`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
             const numOfPhotos = await res.json() as Promise<{numOfPhotos: number}>;
             // Get each photo one by one
             for(let i = 0; i < (await numOfPhotos).numOfPhotos; i++){
-              fetch(`https://dashboard-challenge-project.herokuapp.com/photo/${username}?id=${i}`)
+              fetch(`http://localhost:3000/photo/${username}?id=${i}`)
               .then(async innerRes => {
                   if(innerRes.ok) {
                       const photo = await responseToFile(innerRes); 
@@ -316,7 +316,7 @@ function App() {
   }
 
   const getTasks = (username: string) => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/tasks/${username}`)
+    fetch(`http://localhost:3000/tasks/${username}`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
@@ -333,7 +333,7 @@ function App() {
   }
 
   const getClothesData = () => {
-    fetch(`https://dashboard-challenge-project.herokuapp.com/clothes`)
+    fetch(`http://localhost:3000/clothes`)
     .then(async res => {
         if(res.ok) {
             console.log(res);
