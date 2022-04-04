@@ -18,7 +18,7 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
     const addTask = () => {
         const task = {task: `Task ${props.tasks.length}`, completed: false};
         props.setTasks([...props.tasks, task])
-        fetch(`http://localhost:3000/task/${props.username}`, {
+        fetch(`https://dashboard-challenge-project.herokuapp.com/task/${props.username}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({...task, id: props.tasks.length})
@@ -37,7 +37,7 @@ const Tasks = (props: {username: string, tasks: ITaskData[], setTasks: React.Dis
     const saveTasks = () => {
         // const task = {task: "", completed: false};
         // setTasks([...tasks, task])
-        fetch(`http://localhost:3000/tasks/${props.username}`, {
+        fetch(`https://dashboard-challenge-project.herokuapp.com/tasks/${props.username}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({tasks : props.tasks.map((task, i) => ({task: task.task, completed: task.completed, id: i}))})
