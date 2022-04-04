@@ -97,28 +97,28 @@ function App() {
 // }
 
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", saveTeam)
-    return () => {
-      // console.log("Saving last input team");
-      window.removeEventListener("beforeunload", saveTeam)
-    }
-  }, [])
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", saveTeam)
+  //   return () => {
+  //     // console.log("Saving last input team");
+  //     window.removeEventListener("beforeunload", saveTeam)
+  //   }
+  // }, [])
 
-  const saveTeam = () => {
-    // const task = {task: "", completed: false};
-    // setTasks([...tasks, task])
-    console.log("Saving last input team");
-    fetch(`http://localhost:3000/sport/team/${userData.username}`, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({team})
-    })
-    .then(res => {
-        console.log(res);
-    })
-    .catch(error => console.log("there was an error " + error))
-  }
+  // const saveTeam = () => {
+  //   // const task = {task: "", completed: false};
+  //   // setTasks([...tasks, task])
+  //   console.log("Saving last input team");
+  //   fetch(`http://localhost:3000/sport/team/${userData.username}`, {
+  //       method: "PUT",
+  //       headers: {"Content-Type": "application/json"},
+  //       body: JSON.stringify({team})
+  //   })
+  //   .then(res => {
+  //       console.log(res);
+  //   })
+  //   .catch(error => console.log("there was an error " + error))
+  // }
 
   const login = async (username: string, password: string) => {
     let success = false;
@@ -171,7 +171,7 @@ function App() {
     getWeatherData();
     getNewsData();
     getSportData();
-    getTeam();
+    // getTeam();
     getPhotos(username);
     getTasks(username);
     getClothesData();
@@ -271,20 +271,20 @@ function App() {
     .catch(error => console.log("there was an error " + error))
   }
 
-  const getTeam = () => {
-    fetch(`http://localhost:3000/sport/team/${userData.username}`)
-    .then(async res => {
-        if(res.ok) {
-            console.log(res);
-            const data = await res.json();
-            setTeam(data.team);
-          }
-        else{
-          console.log("Team response not ok");
-        }
-    })
-    .catch(error => console.log("there was an error " + error))
-  }
+  // const getTeam = () => {
+  //   fetch(`http://localhost:3000/sport/team/${userData.username}`)
+  //   .then(async res => {
+  //       if(res.ok) {
+  //           console.log(res);
+  //           const data = await res.json();
+  //           setTeam(data.team);
+  //         }
+  //       else{
+  //         console.log("Team response not ok");
+  //       }
+  //   })
+  //   .catch(error => console.log("there was an error " + error))
+  // }
   
   const getPhotos = (username: string) => {
     fetch(`http://localhost:3000/photos/${username}`)
